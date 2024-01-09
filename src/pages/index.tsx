@@ -1,4 +1,6 @@
 import { SignInButton, useUser } from "@clerk/nextjs";
+import EmojiPicker from "emoji-picker-react";
+import { useState } from "react";
 import PostView from "~/components/PostView";
 import Profile from "~/components/Profile";
 import { api } from "~/utils/api";
@@ -6,6 +8,8 @@ import { api } from "~/utils/api";
 export default function Home() {
   const { isSignedIn } = useUser();
   const { data, isLoading } = api.post.getALl.useQuery();
+  const [emojis, setEmojis] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
 
   return (
     <main>
@@ -21,12 +25,31 @@ export default function Home() {
             )}
           </div>
           {isSignedIn && (
-            <div className="w-full border-b border-slate-400 p-5">
+            <div
+              onFocus={() => setShowPicker(true)}
+              className="relative w-full border-b border-slate-400 p-5"
+            >
               <input
                 type="text"
                 placeholder="Type some emojis!"
-                className="w-full rounded-xl p-3 outline-none"
+                value={emojis}
+                onChange={(e) => {
+                  setEmojis(e.target.value);
+                }}
+                className="w-full rounded-xl p-3 text-slate-500 outline-none"
               />
+              {showPicker && (
+                <div className="absolute left-0 p-5">
+                  <EmojiPicker
+                    searchDisabled
+                    skinTonesDisabled
+                    onEmojiClick={(emoji) => {
+                      setEmojis(`${emojis}${emoji.emoji}`);
+                      setShowPicker(false);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           )}
           <div className="flex flex-col">
@@ -37,7 +60,7 @@ export default function Home() {
                 <span className="p-3">No data found!</span>
               )
             ) : (
-              <div className="h-[50px] w-[50px] animate-spin rounded-full border-4 border-blue-200 border-b-slate-400 p-3" />
+              <div className="m-3 h-[50px] w-[50px] animate-spin rounded-full border-4 border-blue-200 border-b-slate-400" />
             )}
           </div>
         </div>

@@ -29,6 +29,9 @@ dependencies:
   '@trpc/server':
     specifier: ^10.43.6
     version: 10.45.0
+  emoji-picker-react:
+    specifier: ^4.6.7
+    version: 4.6.7(react@18.2.0)
   next:
     specifier: ^14.0.4
     version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -1347,6 +1350,16 @@ packages:
     resolution: {integrity: sha512-lKoz10iCYlP1WtRYdh5MvocQPWVRoI7ysp6qf18bmeBgR8abE6+I2CsfyNKztRDZvhdWc+krKT6wS7Neg8sw3A==}
     dev: true
 
+  /emoji-picker-react@4.6.7(react@18.2.0):
+    resolution: {integrity: sha512-JVv3+TmFqCBhZpCWLehjLCQCcI0f5JEOAvom9bNZPRQPgZ939XmJZPil/cPq+BQEX6zaplUo9dvQWeLPBdN7/A==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      flairup: 0.0.24
+      react: 18.2.0
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -1786,6 +1799,10 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
     dev: true
+
+  /flairup@0.0.24:
+    resolution: {integrity: sha512-IancRT2IbWl5BxdQOHDFsEAywRharp0wZ/1TJY/rPdFcDMgkbmW3MDg4tgoLqy+pcp0WDxMhNwkkY4ycWr//Dw==}
+    dev: false
 
   /flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}

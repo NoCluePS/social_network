@@ -19,7 +19,10 @@ const PostView = ({ username, pfp, content, createdAt }: PostWithUser) => {
       <div className="flex flex-col">
         <span className="mb-2">
           @{username}
-          <span className="text-sm text-slate-400"> · {timeString}</span>
+          <span className="text-sm font-thin text-slate-400">
+            {" "}
+            · {timeString}
+          </span>
         </span>
         <span>{content}</span>
       </div>
