@@ -1,6 +1,6 @@
 import { SignInButton, useUser } from "@clerk/nextjs";
+import PostView from "~/components/PostView";
 import Profile from "~/components/Profile";
-import Image from "next/image";
 import { api } from "~/utils/api";
 
 export default function Home() {
@@ -20,30 +20,18 @@ export default function Home() {
               <Profile />
             )}
           </div>
-          <div className="w-full border-b border-slate-400 p-5">
-            <input
-              type="text"
-              placeholder="Type some emojis!"
-              className="w-full rounded-xl p-3 outline-none"
-            />
-          </div>
+          {isSignedIn && (
+            <div className="w-full border-b border-slate-400 p-5">
+              <input
+                type="text"
+                placeholder="Type some emojis!"
+                className="w-full rounded-xl p-3 outline-none"
+              />
+            </div>
+          )}
           <div className="flex flex-col">
             {data && !isLoading ? (
-              data.map(({ content, id, pfp, username }) => (
-                <div className="border-b border-slate-400 p-8" key={id}>
-                  <div className="mb-4 flex items-center gap-4">
-                    <Image
-                      width={40}
-                      height={40}
-                      src={pfp}
-                      alt={`${username} Profile picture`}
-                      className="rounded-xl"
-                    />
-                    <span>{username}</span>
-                  </div>
-                  {content}
-                </div>
-              ))
+              data.map((post) => <PostView key={post.id} {...post} />)
             ) : (
               <div className="h-[50px] w-[50px] animate-spin rounded-full border-4 border-blue-200 border-b-slate-400" />
             )}

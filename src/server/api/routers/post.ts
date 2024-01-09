@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { clerkClient } from "@clerk/nextjs";
 import { z } from "zod";
 
@@ -27,7 +28,7 @@ export const postRouter = createTRPCRouter({
     });
 
     const users = await clerkClient.users.getUserList({
-      userId: posts.map((post) => post.author as string),
+      userId: posts.map((post) => post.author),
       limit: 100,
     });
 
