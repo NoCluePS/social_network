@@ -30,10 +30,14 @@ export default function Home() {
             </div>
           )}
           <div className="flex flex-col">
-            {data && !isLoading ? (
-              data.map((post) => <PostView key={post.id} {...post} />)
+            {!isLoading ? (
+              data && !!data.length ? (
+                data.map((post) => <PostView key={post.id} {...post} />)
+              ) : (
+                <span className="p-3">No data found!</span>
+              )
             ) : (
-              <div className="h-[50px] w-[50px] animate-spin rounded-full border-4 border-blue-200 border-b-slate-400" />
+              <div className="h-[50px] w-[50px] animate-spin rounded-full border-4 border-blue-200 border-b-slate-400 p-3" />
             )}
           </div>
         </div>
