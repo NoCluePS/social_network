@@ -48,9 +48,7 @@ export default function Home() {
           <div className="flex flex-col">
             {!isLoading ? (
               data && !!data.length ? (
-                data
-                  .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-                  .map((post) => <PostView key={post.id} {...post} />)
+                data.map((post) => <PostView key={post.id} {...post} />)
               ) : (
                 <span className="p-3">No data found!</span>
               )

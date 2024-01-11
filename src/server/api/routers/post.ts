@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { clerkClient } from "@clerk/nextjs";
+import { TRPCError } from "@trpc/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
 import {
@@ -8,10 +13,20 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+const rateLimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, "1 m"),
+  analytics: true,
+  prefix: "@upstash/ratelimit",
+});
+
 export const postRouter = createTRPCRouter({
   create: privateProcedure
     .input(z.object({ content: z.string().emoji().min(1).max(280) }))
     .mutation(async ({ ctx, input: { content } }) => {
+      const { success } = await rateLimit.limit(ctx.currentUser);
+      if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+
       return ctx.db.post.create({
         data: {
           content,
@@ -29,6 +44,7 @@ export const postRouter = createTRPCRouter({
   getALl: publicProcedure.query(async ({ ctx }) => {
     const posts = await ctx.db.post.findMany({
       take: 100,
+      orderBy: { createdAt: "desc" },
     });
 
     const users = await clerkClient.users.getUserList({
