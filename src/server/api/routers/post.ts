@@ -2,16 +2,20 @@
 import { clerkClient } from "@clerk/nextjs";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  create: publicProcedure
-    .input(z.object({ content: z.string(), author: z.string() }))
-    .mutation(async ({ ctx, input: { content, author } }) => {
+  create: privateProcedure
+    .input(z.object({ content: z.string().emoji().min(1).max(280) }))
+    .mutation(async ({ ctx, input: { content } }) => {
       return ctx.db.post.create({
         data: {
           content,
-          author,
+          author: ctx.currentUser,
         },
       });
     }),

@@ -1,9 +1,14 @@
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import React from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Profile = () => {
-  const { user } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
+
+  if (!isSignedIn) return <SignInButton />;
+
+  if (!isLoaded) return <LoadingSpinner />;
 
   if (!user) return null;
 

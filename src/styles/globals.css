@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 main {
-    @apply bg-black text-slate-100 h-[100vh] font-mono;
+    @apply bg-black text-slate-100 min-h-[100vh] font-mono;
 }
