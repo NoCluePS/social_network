@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import { type RouterOutputs } from "~/utils/api";
 import { getRelativeTimeString } from "~/utils/dateString";
+import Link from "next/link";
 
 type PostWithUser = RouterOutputs["post"]["getALl"][number];
-const PostView = ({ username, pfp, content, createdAt }: PostWithUser) => {
+const PostView = ({ username, pfp, content, createdAt, id }: PostWithUser) => {
   const timeString = getRelativeTimeString(createdAt);
 
   return (
@@ -18,11 +19,13 @@ const PostView = ({ username, pfp, content, createdAt }: PostWithUser) => {
       />
       <div className="flex flex-col">
         <span className="mb-2">
-          @{username}
-          <span className="text-sm font-thin text-slate-400">
-            {" "}
-            · {timeString}
-          </span>
+          <Link href={`/@${username}`}>@{username}</Link>
+          <Link href={`/post/${id}`}>
+            <span className="text-sm font-thin text-slate-400">
+              {" "}
+              · {timeString}
+            </span>
+          </Link>
         </span>
         <span>{content}</span>
       </div>
