@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import PostView from "~/components/PostView";
 import Profile from "~/components/Profile";
@@ -10,6 +11,10 @@ export default function Home() {
   const { data, isLoading, refetch } = api.post.getALl.useQuery();
   const { mutate, isLoading: mutationLoading } = api.post.create.useMutation({
     onSuccess: () => refetch(),
+    onError: (err) => {
+      const errorMessage = err.data?.zodError?.fieldErrors?.content?.[0];
+      if (errorMessage) return toast.error(errorMessage);
+    },
   });
   const [emojis, setEmojis] = useState("");
 
