@@ -22,7 +22,11 @@ const rateLimit = new Ratelimit({
 
 export const postRouter = createTRPCRouter({
   create: privateProcedure
-    .input(z.object({ content: z.string().emoji().min(1).max(280) }))
+    .input(
+      z.object({
+        content: z.string().emoji("Only emojis are allowed").min(1).max(280),
+      }),
+    )
     .mutation(async ({ ctx, input: { content } }) => {
       const { success } = await rateLimit.limit(ctx.currentUser);
       if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
