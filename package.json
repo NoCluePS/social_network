@@ -27,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
+    "ssg": "link:@trpc/react/ssg",
     "superjson": "^2.2.1",
     "zod": "^3.22.4"
   },

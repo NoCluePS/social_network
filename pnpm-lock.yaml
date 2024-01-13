@@ -47,6 +47,9 @@ dependencies:
   react-hot-toast:
     specifier: ^2.4.1
     version: 2.4.1(csstype@3.1.3)(react-dom@18.2.0)(react@18.2.0)
+  ssg:
+    specifier: link:@trpc/react/ssg
+    version: link:@trpc/react/ssg
   superjson:
     specifier: ^2.2.1
     version: 2.2.1
